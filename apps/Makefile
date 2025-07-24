@@ -2,7 +2,7 @@ PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 SCRIPTS = $(wildcard *.sh)
 
-.PHONY: install uninstall
+.PHONY: install clean
 
 install:
 	@echo "Installing symlinks to $(BINDIR)/"
@@ -12,7 +12,7 @@ install:
 		echo "  - $$script → $(BINDIR)/$$(basename $$script .sh)"; \
 	done
 
-uninstall:
+clean:
 	@echo "Removing symlinks from $(BINDIR)/"
 	@for script in $(SCRIPTS); do \
 		rm -f $(BINDIR)/$$(basename $$script .sh); \
