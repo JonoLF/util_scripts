@@ -33,7 +33,7 @@ fi
 
 # Generate changelog from commits since last tag
 changelog=$(mktemp)
-if [[ -z "$currTag" ]]; then
+if [[ "$currTag" = "v0.0.0" ]]; then
   echo "Initial release $newTag" > "$changelog"
   git log --pretty=format:"- %h %s" >> "$changelog"
 else
