@@ -6,7 +6,7 @@ workspace=""
 usage() {
     cat <<EOF
 Usage: $(basename $0) [-w | --workspace "workspace"]
--w | --workspace -> The workspace to launch (design, investigation)
+    -w | --workspace -> The workspace to launch (design, investigation)
     -h -> Display this help message
 EOF
     exit 1
@@ -46,7 +46,41 @@ while [ $# -gt 0 ]; do
     esac
 done
 
+# setup functions for workspaces
+deployDesignWorkspace() {
+    # launch apps
+    flatpak run com.spotify.Client &
+    sleep 2
+    firefox &
+    sleep 2
+    open "obsidian://open?vault=DesignProject" &
+    sleep 2
+}
+
+deployInvestigationWorkspace() {
+    # launch apps
+    flatpak run com.spotify.Client &
+    sleep 2
+    firefox &
+    sleep 2
+    open "obsidian://open?vault=InvestigationProject" &
+    sleep 2
+}
+
 # check expected values of workspace
 # compare all upper case values for consistency
 case "${workspace^^}" in
+    "DESIGN")
+        echo "Deploying design project workspace"
+        deployDesignWorkspace
+        ;;
+    "INVESTIGATION")
+        echo "Deploying investigation project workspace"
+        deployInvestigationWorkspace
+        ;;
+    *)
+        echo "Unsupported option!"
+        usage
+        ;;
+esac
     
